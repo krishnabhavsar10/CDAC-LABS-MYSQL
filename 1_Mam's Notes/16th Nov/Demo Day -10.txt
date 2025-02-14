@@ -1,0 +1,337 @@
+permissions(MySQL)
+
+to give permission-----grant
+remove the permission------revoke
+
+permissions are given to usere on following things
+
+select
+update
+delete
+insert
+references
+alter
+index
+all
+
+grant select
+on emp
+to user_name
+
+revoke select
+on emo
+from user_name
+
+
+
+
+-----------------------------------------------
+SQL				NoSQL
+----------------------          -------------
+-structured query lag		not only SQL
+-structured data    		data is unstructured
+-data is in the form of		data is stored in        rows and columns		document 
+-date accessing /processing     faster
+  slow	
+-data is stored on 1 machine    distributed data
+-SQL serve there is vertical    horizontal scaling
+ scaling.
+-can case accessibility problem highly accessible
+                                (data replication)
+-database tables                database collections
+-column,field,attribute         field,attribute
+-row,record,tuple               document
+-pk created                     system gives pk
+-constraints                    no constraints
+-joins                          no joins
+                                (nested documents)
+-OLTP                           OLAP
+online transaction processing   online analytical 
+                                processing
+
+RDBMS - MySQL,Oracle,postgre,MS access,MariaDB
+
+NoSQL - Cassandra, MongoDB, CouchbasedDB, HBase
+        with HDFS(Hadoop), DynamoDB
+
+display databases
+-----------------
+>show dbs
+
+create database
+---------------
+>use empdb
+will create new database. if existing will connect
+
+current database
+-----------------
+>db
+
+inserting data in collection
+---------------------------
+collection name-dept
+
+>db.dept.insert({dno:1,dname:'sales'})
+ db.dept.insert({dno:2,dname:'purchase',loc:'pune'})
+db.dept.insert({dno:3,dname:'mkt',ph_no:999999})
+
+display data from collection
+-----------------------------
+>db.dept.find()
+db.dept.find().pretty()
+
+inserting multiple documents
+-----------------------------
+db.collection_name.insertMany([{},{},{}])
+
+db.dept.insertMany([{deptno:3,dname:'training'},{dno:10,dname:'development',location:'Hydrabad'}])
+
+display collections
+-------------------
+show collections
+
+-----------------
+db.dept.insertMany([{deptno:3,dname:'acc'},{deptno:3,dname:'admin',location:'Hydrabad'}])
+
+db.dept.findOne()
+
+db.dept.find({deptno:3})
+select * from dept where deptno=3;
+
+deleting the collection
+-----------------------
+db.collection_name.drop()
+
+db.dept.drop()
+
+--------------------------
+deleting database
+>db.dropDatabase()
+current database is deleted
+
+-----------------------
+
+create collection
+>db.createCollection("collection_name")
+
+>db.createCollection("emp")
+
+db.emp.insertMany([{eno:1,ename:'Kiran',deptno:10},
+{eno:2,ename:'Sanjay'},{eno:3,ename:'Smita',hobby:["reading","music"]}])
+
+display info for Kiran
+db.emp.find({ename:'Kiran'}).pretty()
+
+syntax of find
+find({query},{projection})
+
+db.emp.find({ename:'Kiran'},{deptno:1,_id:0})
+1-inclusion
+0-exclusion
+
+db.emp.insertMany([{eno:4,ename:'Radha',deptno:10},
+{eno:5,ename:'Sameer',deptno:10},{eno:6,ename:'Sarita',hobby:["reading","music"],deptno:10}])
+
+db.emp.find({deptno:10},{eno:1,ename:1,deptno:1,_id:0}).pretty()
+
+
+operators in Mongo
+-----------------
+$lt ------ <
+$gt ------- >
+$eq ------- ==
+$lte ------ <=
+$gte ------- >=
+$ne  ------- !=
+
+$in ------ in the set of values
+$nin ------ not in the set of values
+$mod ------ modulus
+
+display all movies with rating
+-------------------------------
+db.movie.find({rating:3})
+
+display all movies with rating and price 200
+----------------------------------------
+db.movie.find({rating:3,price:200})
+
+rrating >3
+----------
+$gt
+db.movie.find({rating:{$gt:3}},{name:1,_id:0,rating:1}).pretty()
+
+rating>3 and price >200
+-------------------------
+db.movie.find({rating:{$gt:3},price:{$gt:200}}).pretty()
+
+display name,rating,price of all movies
+---------------------------------------
+db.movie.find({},{name:1,rating:1,price:1,_id:0})
+
+price>200 and <400
+-----------------
+db.movie.find({price:{$gt:200},price:{$lt:400}}).pretty()
+
+
+display all movies where price =200 or 300 or 350
+db.movie.find({price:{$in:[200,300,350]}})
+
+$nin not in
+display all movies where price is not =200 or not 300 or not 350
+db.movie.find({price:{$nin:[200,300,350]}})
+
+$mod
+display all movies with even rating
+db.movie.find({rating:{$mod:[2,0]}})
+
+
+sorting
+-------
+db.movie.find({},{name:1,rating:1,_id:0}).sort({rating:1}).pretty()
+ascending order
+
+db.movie.find({},{name:1,rating:1,_id:0}).sort({rating:-
+1}).pretty()
+descending order
+
+limt
+-----
+db.movie.find({},{name:1,_id:0}).limit(5)
+
+movie with topmost rating
+db.movie.find({},{name:1,rating:1,_id:0}).sort({rating:-1}).limit(1)
+
+skip()
+-----
+db.movie.find({},{name:1,rating:1,_id:0}).skip(2).limit(3)
+
+display movie where Amitabh is at first index pos
+
+
+
+
+db.movie.find({actor:'Amitabh'}).pretty()
+
+db.movie.find({'actor.1':'Amitabh'}).pretty()
+
+
+all movies with rating 4 or price>400
+rating:3  price:{$gt:400}
+$or
+$or:[{},{},{}]
+
+db.movie.find({$or:[{rating:3},{price:{$gt:400}}]})
+
+regular expressions
+-------------------
+^ begin
+\d digit
+$ end
+.* multiple char
+// pattern
+
+movie ending with digit
+------------------
+db.movie.find({name:/[0-9]$/},{name:1,_id:0})
+or
+db.movie.find({name:/\d$/},{name:1,_id:0})
+
+start with digit and end with s
+----------------------------------
+db.movie.find({name:/^\d.*s$/},{name:1,_id:0})
+
+starts with any alphabet and end with s
+db.movie.find({name:/^[a-zA-Z].*s$/},{name:1,_id:0})
+
+------------------------------------------------------
+
+updating data
+
+update({query},{action},{options})
+updateOne({query},{action})
+updateMany({query},{action})
+
+operators
+
+$set - set new value
+$unset - removes key-value pair
+$min 
+$inc
+$max
+
+set rating to 5 fro sholay movie
+
+db.movie.update({name:'sholay'},{$set:{rating:5}},{multi:true})
+
+inctement price by 100 fro sholay
+
+db.movie.update({name:'sholay'},{$inc:{price:100}},{multi:true})
+
+set rating for sholay = 9 and decrement price by 50
+
+db.movie.update({name:'sholay'},{$set:{rating:9},$inc:{price:-50}},{multi:true})
+
+increase the price by 10%
+$mul
+
+price*1.10
+
+db.movie.update({name:'sholay'},{$mul:{price:1.10}},{multi:true})
+
+delete key-value pair
+$unset
+db.dept.update({dname:'development'},{$unset:{location:""}},{multi:false})
+
+update rating to 6  
+$min
+
+db.movie.update({},{$min:{rating:6}},{multi:true})
+
+max()
+db.movie.update({},{$max:{rating:5}},{multi:true})
+
+--------------------------------------------------------
+
+delete
+
+
+deleting the collection
+-----------------------
+db.collection_name.drop()
+
+db.dept.drop()
+
+--------------------------
+deleting database
+>db.dropDatabase()
+current database is deleted
+
+deleting document
+db.collection_name.remove({})
+
+eg
+
+db.emp.remove({deptno:10})
+
+delete()
+--------
+will delete selected documents
+
+db.movie.deleteOne({rating:5})
+
+db.movie.deleteMany({rating:5})
+
+all movies with rating 4 or price>400
+rating:3  price:{$gt:400}
+$or
+$or:[{},{},{}]
+
+db.movie.find({$or:[{rating:3},{price:{$gt:400}}]})
+
+
+
+
+
+					
+ 	

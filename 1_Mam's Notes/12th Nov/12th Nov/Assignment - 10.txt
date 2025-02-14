@@ -1,0 +1,6 @@
+1. Practise set operators
+
+2. Practice on delete set null/ cascade
+            on update set null/ cascade
+
+3. Practise auto_increment

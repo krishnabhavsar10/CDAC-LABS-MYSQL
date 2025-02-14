@@ -1,0 +1,92 @@
+1.faculty(fid(PK),fname,sp.skill1,sp.skill2)      
+CREATE TABLE faculty(fid int primary key, fname varchar (20) not null,  sp_skill1 varchar (30), sp_skill2 varchar(30));
+
+fid   fname    sp_skill1         sp_skill2
+------------------------------------------
+10    Amol      Database          Java
+11    Asha      Java              MySQL
+12    Kiran     CPP               database
+13    Seeta     MySQL             database
+
+
+2. courses(cid(PK),cname,rid,fid(FK))
+
+  
+CREATE TABLE Courses
+   (
+cid int primary key,
+  
+     cname varchar (15) not null  ,
+ 
+     rid int, 
+   fid int,
+   foreign key(rid) references room(rid) on delete set null,
+   
+     foreign key(fid) references faculty(fid) on delete set null
+   );
+
+
+cid	cname	rid	 fid
+
+121	DBDA	100	10
+1
+31	DAC	101	null
+
+141	DTISS	null	null
+
+151	DOIT	105	12
+
+
+
+3. room(roomid,rname,rloc)  
+ CREATE TABLE room
+    (rid int primary key, 
+     rname varchar(15) not null,  
+     rloc varchar(20)
+   );
+
+rid     rname    rloc 
+100   Jasmin   1st floor 
+101    Rose      2nd floor
+105    Lotus     1st floor
+103    Mogra   1st floor
+
+
+1. list all rooms which are allocated or not allocated to any courses.
+ 
+ 
+
+Expected Output
++---------+-------------+----------+------------+
+
+|  rid      | rname     | cid       | cname   |
+
++---------+-------------+----------+------------+
+|
+ 100      | Jasmin      |  121     | DBDA     |
+
+| 101     | Rose        |  131     | DAC      |
+
+| 103     | Mogra       | NULL     | NULL     |
+
+| 105     | Lotus       |  151     | DIOT     |
++---------+-------------+----------+------------+
+
+4 rows in set (0.00 sec)
+
+2. list all rooms which are not allocated to any courses.
+ 
+
+3. display courses and faculty assigned to those courses whose special skill is database.
+
+
+Expected Output
++-------+-----------+-------+-----------+--------------+---------------+
+| cid    | cname    | fid   | fname     | sp_skill1    | sp_skill2     |
++-------+-----------+-------+-----------+--------------+---------------+
+| 121    | DBDA     |  10   | Amol      | database     |  JAVA         |
+| 151    | DIOT     |  12   | Kiran     | CPP          |  Database     |
++-------+-----------+--------+-----------+-------------+---------------+
+2 rows in set (0.00 sec) 
+
+

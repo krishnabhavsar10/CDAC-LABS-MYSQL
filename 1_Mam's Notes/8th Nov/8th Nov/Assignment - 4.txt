@@ -1,0 +1,93 @@
+1. Display hiredate from emp table in different formats. 
+
+2. Find all employees whose sal is divisible by 3 .
+
+3. Write query to display name followed by 4 stars followed by sal . '
+ e.g SMITH****800   
+
+
+4. Display email as ename followed by mycompany.com. 
+ e.g SMITH@mycompany.com
+
+
+5.Display ename and it's length for all employees. 
+e.g SMITH 5
+
+
+6.Display email as  first  3 chacarters of ename, followed by dot, followed by 2 and 3rd character of  jobs,followed by @MyCompany
+
+
+7. Display name starting with upper case letter and job starting with upper case letter for all employees.   
+ e.g Smith Clerk
+ 
+
+8. Display first 3 characters of ename in lower case and rest everything in upper case.  
+   e.g smiTH
+
+9. Display last 3 letters of name.
+
+10. Generate an email-id for all employees and display. Email id is generated as follows    
+first 3 letters of name in lower case + last 2 letters of job in lower case + @knowit.com   
+ eg name=SMITH   job=CLERK      email-id = smirk@knowit.com
+
+11. List all employees having experience greater than 40 years.
+
+12. Increase the salary by 10% in the database for all employees having experience more than 40 years  
+
+13. Implement following using case statement. Use data from emp database.    If comm is null ‘need improvement’ If <500 “ok” If >=500 and < 1000 ‘good' ‘Excellent'
+
+14.From the emp table, write a SQL query to find those employees whose salary is in the range of 1000, and 3000 (Begin and end values included.). Return all the fields.
+
+15. Display all names. Length of each name should be 10 characters , add required spaces on left side of name, also display job, length of job should be 9 characters add required on the right side of job.
+
+16. Display string “Hello” followed by name having first letter of name in capital, followed by ! for all  employees  who earned commission.
+
+17. Display all employee names from emp table in the following format. 
+  Hello Allen . 
+
+18. Write a query to display name is a job. 
+   e.g SMITH is a clerk 
+   job should be in small letters
+
+19. Display all columns by sperating with comma.
+
+20. Find how many analysts are there in each department.
+
+21. To find max, min and sum of salary for all employees whose sal > 1500 and < 3000
+
+22. Display ename,sal for dept 10 with max sal at the top.
+
+23. Write a query which will display name, department no and date of joining of all employees joined between  January 1, 1981 and March 31, 1983. Sort it based on date of joining (ascending). 
+
+24.Display the number of employees who has got the commission.
+
+25. Find sum of all the salaries in emp table.
+
+26. List Department wise total  salary.
+
+27. List department wise total sal only if the total sal is > 8000
+
+28. Count number of clerks in dept 10 and 20.   
+
+29. Display job wise sum of salary excluding dept 30 only if the sum salary is > 5000.
+
+30. Find all employees whose sal is divisible by 3.
+
+31.List emp working as managers and clerks with Salary at least 2000 except in dept 10 and 20.
+
+32. List all the clerks and analysts with salary at least 1000 in dept 20 and 30.
+
+33. Display all employees who works in either dept 10 or 30 or joined in year 1982.
+
+34.Write a query which will display name, department no and date of joining of   all employees joined between  January 1, 1981 and March 31, 1983.  Sort it based on date of   joining (ascending).
+
+35.List the employees in dept 20 and 30 who get no commission.
+
+36.Display job wise max sal only for managers, clerks, salesman working in dept 10 and 20. Sort the data by des order of the max salary.
+
+37.Write a query which will display name, department no and date of joining of   all employees joined between  January 1, 1981 and March 31, 1983. Sort it based on date of   joining (ascending).
+
+38.Display hiredate from emp table in different formats. 
+
+================================================================
+ 

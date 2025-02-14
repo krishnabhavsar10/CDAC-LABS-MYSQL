@@ -1,0 +1,29 @@
+1. Write a procedure which accepts in parameter
+as empno and calculates total salary for that employee. Display salary out of procedure.
+total salary = sal +comm
+
+2.Write a procedure which takes empno of 2 employees. Compare salaries of employees and display ename,sal and job for the employee who
+earns more salary out of procedure. 
+
+3. Write a procedure which accepts ename and job as parameters and calculates salary hike depending on job. 
+
+4. Pass empno to the procedure. Find if employee exists in the table. If so, print sal out of procedure else print sal as 0.
+
+5. Write a function which will display email for employees working as salesman.
+   email generated is as follows
+   2nd and 3rd letter of name+last 2 letters of job in caps + deptno+'@mycompany.com'.
+
+6. Write a function which will return square of the number.
+   Call this function in the procedure 'calculate'. Pass any number to this procedure and call a function in the procedure by passing
+   a number.
+  
+7. wite a cursor which will display salary hike as follows
+   if employee is clerk then hike is 10%
+   if employee is salesman then hike is 7%
+   if employee is analyst then hike is 5%
+   others no hike
+
+8. Try creating index.
+
+9. Practice commit and rollback.
+

@@ -1,0 +1,230 @@
+
+# MongoDB Concepts and Queries
+
+## 1. Querying Data
+
+### 1.1 Basic Conditions
+- Use basic operators to query specific conditions.
+  - `$eq` (equals): `{field: {$eq: value}}`
+  - `$ne` (not equal): `{field: {$ne: value}}`
+  - `$gt` (greater than): `{field: {$gt: value}}`
+  - `$lt` (less than): `{field: {$lt: value}}`
+  - `$gte` (greater than or equal): `{field: {$gte: value}}`
+  - `$lte` (less than or equal): `{field: {$lte: value}}`
+
+Example:
+```javascript
+{price: {$gt: 300}}  // Price greater than 300
+```
+
+### 1.2 Logical Operators
+- Use logical operators to combine multiple conditions.
+  - `$and`: All conditions must be true.
+  - `$or`: At least one condition must be true.
+  - `$nor`: None of the conditions should be true.
+  - `$not`: Negate a condition.
+
+Example:
+```javascript
+{ $or: [{price: 200}, {price: 540}] }  // Price equals 200 or 540
+```
+
+### 1.3 `$in` and `$nin`
+- `$in`: Matches documents where the field's value is in the provided list.
+- `$nin`: Matches documents where the field's value is NOT in the provided list.
+
+Example:
+```javascript
+{price: {$in: [200, 540, 400]}}  // Price is either 200, 540, or 400
+{price: {$nin: [200, 540, 400]}}  // Price is neither 200, 540, nor 400
+```
+
+---
+
+## 2. Counting Documents
+
+### 2.1 `.count()`
+- Use `.count()` to count the number of documents matching a query.
+Example:
+```javascript
+db.movies.find({price: {$nin: [200, 540, 400]}}).count()
+```
+
+---
+
+## 3. Sorting Results
+
+### 3.1 `.sort()`
+- Use `.sort()` to order the results by a specific field.
+- `1` for ascending order, `-1` for descending order.
+
+Example:
+```javascript
+db.movies.find({actor: "Amitabh"}).sort({price: 1})  // Ascending order by price
+```
+
+---
+
+## 4. Limiting Results
+
+### 4.1 `.limit()`
+- Use `.limit(n)` to restrict the number of documents returned.
+Example:
+```javascript
+db.movies.find({actor: "Amitabh"}).limit(5)  // First 5 results
+```
+
+### 4.2 `.skip()`
+- Use `.skip(n)` to skip the first `n` documents in the result set.
+Example:
+```javascript
+db.movies.find({actor: "Amitabh"}).skip(4).limit(3)  // Skip 4, limit to 3 results
+```
+
+---
+
+## 5. Updating Data
+
+### 5.1 Update Operators
+- `$set`: Modify or add a field.
+- `$inc`: Increment a field's value.
+- `$unset`: Remove a field.
+- `$mul`: Multiply a field's value.
+
+Example:
+```javascript
+db.movies.updateOne({name: "Kesari"}, {$set: {rating: 2}})
+db.movies.updateMany({actor: "Amitabh"}, {$inc: {price: 20}})
+```
+
+---
+
+## 6. Deleting Fields
+
+### 6.1 `$unset`
+- Use `$unset` to remove a field from a document.
+
+Example:
+```javascript
+db.movies.updateOne({name: "Kesari"}, {$unset: {rating: ""}})
+```
+
+---
+
+## 7. Array Queries
+
+### 7.1 Find Documents by Array Values
+- Query documents where a field contains specific array values.
+Example:
+```javascript
+db.movies.find({actors: "Amitabh"})
+```
+
+### 7.2 Index-Based Array Queries
+- Query based on array element at a specific index.
+Example:
+```javascript
+db.movies.find({actors: {$elemMatch: {$eq: "Amitabh"}}})
+```
+
+### 7.3 Remove Array Elements
+- Use `$pop` to remove an element from the array (either first or last element).
+Example:
+```javascript
+db.movies.updateOne(query, {$pop: {arrayField: -1}})  // Remove first element
+```
+
+---
+
+## 8. String Queries
+
+### 8.1 Regular Expressions
+- Use regular expressions to search for specific string patterns.
+Example:
+```javascript
+db.movies.find({name: /^[0-9]/})  // Movies starting with digits
+db.movies.find({name: /^[0-9].*s$/})  // Movies starting with a digit and ending with "s"
+```
+
+---
+
+## 9. Aggregation for Complex Queries
+
+### 9.1 Sorting with Aggregation
+- Use the `$sort` stage in aggregation to order results.
+Example:
+```javascript
+db.movies.aggregate([
+    {$sort: {rating: -1}},  // Sort by rating in descending order
+    {$limit: 5}  // Get top 5
+])
+```
+
+---
+
+## 10. Advanced Updates and Deletions
+
+### 10.1 Changing Ratings and Prices
+- Update specific documents by setting fields or increasing values.
+
+Example:
+```javascript
+db.movies.updateOne({name: "Kahani 2"}, {$set: {rating: 5}})
+db.movies.updateMany({name: /Kahani/}, {$inc: {rating: 2}, $set: {price: 400}})
+```
+
+### 10.2 Decreasing or Increasing Values
+- Use `$inc` to increase or decrease prices.
+
+Example:
+```javascript
+db.movies.updateMany({}, {$inc: {price: -40}})  // Decrease price by 40
+db.movies.updateMany({}, {$mul: {price: 1.1}})  // Increase price by 10%
+```
+
+---
+
+## 11. Deleting Documents and Fields
+
+### 11.1 Deleting Specific Fields
+- Remove a specific field from documents using `$unset`.
+Example:
+```javascript
+db.movies.updateOne({name: "Kesari"}, {$unset: {rating: ""}})
+```
+
+---
+
+## 12. Example Queries
+
+### Example 1: Display all movies with price not equal to 200, 540, or 400
+```javascript
+db.movies.find({price: {$nin: [200, 540, 400]}})
+```
+
+### Example 2: Display count of movies with price not equal to 200, 540, or 400
+```javascript
+db.movies.find({price: {$nin: [200, 540, 400]}}).count()
+```
+
+### Example 3: Display all movies with rating = 4 or price > 300
+```javascript
+db.movies.find({$or: [{rating: 4}, {price: {$gt: 300}}]})
+```
+
+### Example 4: Display movies with price not between 200 and 400
+```javascript
+db.movies.find({price: {$not: {$gt: 200, $lt: 400}}})
+```
+
+### Example 5: Display movies with odd rating
+```javascript
+db.movies.find({rating: {$mod: [2, 1]}})
+```
+
+---
+
+## Download the File
+
+This file contains all the necessary MongoDB concepts and queries for your reference.
+

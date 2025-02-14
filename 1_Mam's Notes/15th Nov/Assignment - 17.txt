@@ -1,0 +1,19 @@
+1.Consider following tables    
+  product(pid,pname,price,qty)   
+   product_log(pid,old_amt,new_amt)   
+   amt =price * qty
+Write a trigger which will calculate amt every time any update is done in the price of an item. 
+
+2.Consider following table  
+   emp_wage(eno,ename,sal,over_time)   eno : pk auto inc
+   Write a trigger which will insert over_time as 400 if value of  over_time entered is null.    
+
+3.Consider following table     
+  order_master(oid,pname,qty,price)      oid : pk auto inc      
+  order_log(oid,odate,amt)
+  Write a trigger which will create a log of all orders once order is placed.
+
+4.Consider following table    
+  cust_master(cid,cname,accno,city) 
+  cust_details(cid,deleted_date)
+Write a trigger which will save the information of deleted customer in cust_details table. 

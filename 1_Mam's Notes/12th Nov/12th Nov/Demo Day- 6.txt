@@ -1,0 +1,285 @@
+create table new_emp1
+as
+  select * from emp;
+
+
+subquery to insert the data
+----------------------------
+insert into empTemp
+  (
+     select empno,ename,sal
+     from emp
+     where deptno =20
+  );
+
+-empTmp table structure is already existing
+
+subquery to delete the data
+---------------------------
+delete all emps working in allen's dep
+ delete 
+ from emp10
+ where deptno=(select deptno
+               from emp10
+               where ename='allen');
+
+
+dose not allow read/write operations simultaneously to be performrd
+
+solution
+
+delete 
+from emp10
+where deptno =(select deptno
+               from(select deptno 
+                    from emp10
+                    where ename='allen')
+               tmptab);
+
+
+change deptno of all employees to smith's dept
+
+update emp10 
+set deptno=(select deptno
+            from emp10
+            where ename='smith');
+
+ERROR 1093 (HY000): You can't specify target table 'emp10' for update in FROM clause
+
+update emp10
+set deptno=(select deptno
+            from(select deptno
+                 from emp10
+                 where ename='smith')
+            x);
+
+ 
+
+
+ select distinct deptno 
+ from emp10 
+ where deptno IN (select deptno 
+                  from dept10);
+
++--------+
+| deptno |
++--------+
+|     20 |
+|     30 |
+|     10 |
++--------+
+
+select distinct deptno 
+ from emp10 
+ where deptno NOT IN (select deptno 
+                      from dept10);
+
++--------+
+| deptno |
++--------+
+|     50 |
++--------+
+1 row in set (0.00 sec)
+
+
+emp10(10,20,30,50)
+dept10(10,20,30,40)
+
+emp10 in dept10   10 20 30 
+emp10 not in dept10 50
+
+ find deptno in which employees are not working
+
+select deptno 
+from dept10
+where deptno not in (select deptno
+		     from emp10
+                    );
+
+inner query 10 20 30 50
+
+select deptno  10 20 30 40
+from dept10
+where deptno =any (select deptno
+		     from emp10
+                    );    10 20 30 50
+
+insert into emp10(empno,ename,deptno)
+values(2222,'Sumit',null);
+
+select deptno 
+from dept10
+where deptno not in (select deptno
+		     from emp10
+                     where deptno is not null
+                    );
+====================================
+
+correlated query
+
+list all employees earning salary > avg(sal) in the organization
+
+select *
+from emp 
+where sal >(select avg(sal)
+            from emp);
+
+list all employees earning salary > avg(sal) of the dept in which they are working
+select ename,deptno,sal
+from emp e1
+where e1.sal >(select avg(sal)
+            from emp e2
+            where e1.deptno=e2.deptno
+            );
+e1
+ +--------+---------+--------+
+| ename  | sal     | deptno |
++--------+---------+--------+
+| SMITH  |  800.00 |     20 |
+| ALLEN  | 1600.00 |     30 |
+| WARD   | 1250.00 |     30 |
+| JONES  | 2975.00 |     20 |
+| MARTIN | 1250.00 |     30 |
+| BLAKE  | 2850.00 |     30 |
+| CLARK  | 2450.00 |     10 |
+| SCOTT  | 3000.00 |     20 |
+| KING   | 5000.00 |     10 |
+| TURNER | 1500.00 |     30 |
+| ADAMS  | 1100.00 |     20 |
+| JAMES  |  950.00 |     30 |
+| FORD   | 3000.00 |     20 |
+| MILLER | 1300.00 |     10 |
++--------+---------+--------+
+14 rows in set (0.00 sec)
+
+e2
++--------+---------+--------+
+| ename  | sal     | deptno |
++--------+---------+--------+
+| SMITH  |  800.00 |     20 |
+| ALLEN  | 1600.00 |     30 |
+| WARD   | 1250.00 |     30 |
+| JONES  | 2975.00 |     20 |
+| MARTIN | 1250.00 |     30 |
+| BLAKE  | 2850.00 |     30 |
+| CLARK  | 2450.00 |     10 |
+| SCOTT  | 3000.00 |     20 |
+| KING   | 5000.00 |     10 |
+| TURNER | 1500.00 |     30 |
+| ADAMS  | 1100.00 |     20 |
+| JAMES  |  950.00 |     30 |
+| FORD   | 3000.00 |     20 |
+| MILLER | 1300.00 |     10 |
++--------+---------+--------+
+14 rows in set (0.00 sec)
+
+top - down
+
+student(id,name,marks,std)
+create table student
+(id int,
+ name varchar(10),
+ marks int,
+ std int
+);
+insert into student
+values(1,'Sameer',80,3),
+      (2,'Geeta',50,3),
+      (3,'Seema',60,2),
+      (4,'RAj',70,2),
+      (5,'yash',30,3),
+      (6,'Sumit',40,2);
+
+list students scoring less marks than the avg marks
+
+select *
+from student
+where marks<(select avg(marks)
+             from student);
+
+select * 
+from student s1
+where s1.marks <(select avg(s2.marks)
+                 from student s2
+                 where s1.std=s2.std);
+
+exists and not exists operators
+===============================
+list all depts in which there are no emps
+
+in operator
+select dname,deptno
+from dept10
+where deptno not in(select deptno
+                    from emp10
+                    where deptno Is not null);
+
+select deptno,dname
+from dept10 d
+where not exists(select deptno
+                 from emp10 e
+                 where    
+                 d.deptno=e.deptno);
+
++--------+------------+
+| deptno | dname      |
++--------+------------+
+|     40 | OPERATIONS |
+|     90 | mkt        |
++--------+------------+
+2 rows in set (0.00 sec)
+
+select deptno,dname
+from dept10 d
+where exists(select deptno
+                 from emp10 e
+                 where    
+                 d.deptno=e.deptno);
+
++--------+------------+
+| deptno | dname      |
++--------+------------+
+|     10 | ACCOUNTING |
+|     20 | RESEARCH   |
+|     30 | SALES      |
++--------+------------+
+3 rows in set (0.00 sec)
+
+auto_increment
+
+create table books
+(bid int auto_increment,
+ bname varchar(40),
+ constraint pk_bikd primary key(bid)
+);
+
+insert into books(bname)
+values('Java'),
+      ('Roots'),
+       ('Shiva triology');
+
+insert into books(bname)
+values('HArry potter');
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+

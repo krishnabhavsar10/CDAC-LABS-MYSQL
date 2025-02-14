@@ -1,0 +1,367 @@
+insert into the table empno,ename and sal. Pass above info as arguments to procedure.
+
+delimiter //
+drop procedure if exists display2;
+
+create procedure display2(mno int,in mname varchar(12),msal decimal(7,2))
+begin
+  insert into emp10(empno,ename,sal)
+  values(mno,mname,msal);
+  select empno,ename,sal
+  from emp10;
+end //
+delimiter ;
+
+------------------------
+pass empno to the procedure and delete that employee
+
+delimiter //
+drop procedure if exists del_proc;
+create procedure del_proc(in mempno int)
+begin 
+  delete 
+  from emp10
+  where empno=mempno;
+end //
+delimiter ;
+
+call del_proc(7777);
+
+or 
+set @p=7777;
+call del_proc(@p);
+
+out parameter
+-------------
+find max(sal) and print it out of the procedure
+delimiter //
+drop procedure if exists del_proc;
+create procedure max_sal(out msal decimal(7,2))
+begin
+   select max(sal) into msal
+   from emp;
+end //
+delimiter ;
+
+call max_sal(@k);
+select @k;
+------------------------
+delimiter //
+drop procedure if exists max_sal2;
+create procedure max_sal2()
+begin
+   select max(sal)  
+   from emp;
+end //
+delimiter ;
+---------------------------
+pass empno to proce and display it's name,job,sal out of procedure
+
+delimiter //
+
+create procedure proc11(in mno int,out mname varchar(12),out mjob varchar(10),out msal decimal(7,2))
+begin 
+  select ename,job,sal into   
+  mname,mjob,msal
+  from emp
+  where empno=mno;
+end //
+delimiter ;
+
+call proc11(7902,@x,@y,@z);
+select @x,@y,@z
+-----------------------
+
+
+
+
+
+
+
+
+
+functions in rdbms
+set global log_bin_trust_function_creators =1;
+
+delimiter //
+create function total_sal(msal decimal(7,2),mcomm decimal(7,2))
+returns decimal(7,2)
+begin
+  declare x decimal(7,2);
+  set x=msal+ifnull(mcomm,0);
+  return x;
+end //
+delimiter ;
+
+select ename,sal,comm,total_sal(sal,comm) "Total Sal"
+from emp;
+
+write a function to generate email for all employes
+first 2 letters of name + 3rd and 4th letter of job + @cdac
+delimiter //
+create function email(mename varchar(12),mjob varchar(10))
+returns varchar(15)
+begin
+   declare x varchar(15);
+   set x=concat(substr(mename,1,2),substr(mjob,3,2),'@cdac');
+return x;
+end //
+delimiter ;
+ 
+
+select ename,job,email(ename,job)
+from emp;
+-------------------
+control statements
+
+conditional statements
+
+if condition
+then
+   statements;
+end if;
+
+if condition
+then 
+  statements;
+elseif condition
+  statements;
+else
+end if;
+
+ delimiter //
+ create procedure demo1(a int,b int)
+ begin
+   declare x int default 1 ;
+   if a > b
+   then 
+     select 'a is bigger';
+   else
+     select 'b is bigger';
+   end if;
+ end //
+ delimiter ;
+------------------------------
+Iterative statements
+
+1. while..do
+
+while condition
+do
+  stements;
+end while;
+
+print nos 1 to 5
+
+create procedure demo2
+begin
+declare i int default 1;
+while i<=5
+do 
+  select i;
+  set i=i+1;
+end while;
+  
+
+2. repeat..until
+repeat
+  statements;
+until condition;
+end repeat;
+
+print nos 1 to 5
+
+create procedure demo3()
+begin
+  declare i int default 1;
+  repeat
+    select i;
+    set i = i + 1;
+  until i<=5;
+  end repeat;
+end //
+
+3. loop ----infinite loop
+
+label:loop
+  statements;
+  if condition
+  then 
+    leave label;
+  end if;
+end loop;
+
+delimiter //
+create procedure demo4()
+begin
+ declare i int default 1;
+ x:loop
+   select i;
+   set i=i+1;
+   if i>5
+   then
+     leave x;
+   end if;
+ end loop;
+end // 
+delimiter ;
+--------------------------------------------
+  
+mysql> show procedure status;
+
+mysql>show procedure status
+      where db='your database name';
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+--------------------------------------------
+CURSORS in RDBMS
+--Two types
+1. implicit cursors(insensitive cursor)
+   used by systems
+2. explicit cursor
+   -written by MySQL user
+   -will access each row individually
+   
+steps to implement cursor
+
+1. declare cursor
+2. open cursor
+3. fetch data from table into cursor
+4. close cursor
+
+Cursor to fetch the row
+-----------------------
+display of single row
+delimiter //
+create procedure cursor_demo1()
+begin
+   declare i int;
+   declare n varchar(14);
+   declare cur cursor for
+     select empno,ename
+     from emp;
+   open cur;
+   fetch cur into i,n;
+   select i,n;
+   close cur;
+end //
+delimiter ;
+--------------------
+
+display all data from table using cursor
+
+delimiter //
+create procedure cursor_demo2()
+begin
+  declare x int ;
+  declare y varchar(12);
+  declare z varchar(10);
+  declare flag int default 0;
+  declare cur cursor for
+      select empno,ename,job
+      from emp;
+  declare continue handler for
+  NOT FOUND set flag = 1; 
+  open cur;
+  label:loop
+     fetch cur into x,y,z;
+     select x,y,z;
+     if flag=1
+     then 
+       leave label;
+     end if;
+  end loop;
+  close cur;
+end //
+delimiter ;
+
+===========================================
+index in RDBMS
+
+types of index
+
+1. clustered index
+   -created by system
+   -for PK, unique key
+
+ emp(eno,ppno,adhar_no,name,sal,comm)
+eno=pk
+ppno=unique
+adhar_no=unque
+
+adv:searching is faster
+disadv : disk space require more
+
+2. Unclustered index
+   -created by user
+
+create index index_name on table_name(column_name);
+create index idx_sal on emp(sal);
+=================================
+
+Transaction control language(TCL)
+
+rollback
+commit
+
+DDL --- cannot be rolled back
+DML --- can be rolled back
+
+insert 
+delete
+update
+
+set autocommit=0
+insert into t2
+values(10,'aaa'),
+      (11,'bbb' );
+
+savepoint x;
+insert into t2
+values(12,'ccc'),
+      (13,'ddd' );
+savepoint y;
+delete from t2
+where id=3
+
+all DDL commands are by default committed.
+
+If there are multiple uncommitted DML statements and after that if any DDL statement is executed all uncommitted DML statements will ne committed.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+ 
+

@@ -1,0 +1,67 @@
+select clause in details
+=================================
+1. Display vid, vname, price and details from table vehicle with column heading as Vehicle id, vehicle name, price, discount and details.
+
+2. Create a copy of table customer and salesman by name customer1 and salesman1
+
+3. List all records with sal > 2000 and comm>200
+ 
+4. List all records where job=’Clerk’ or sal>2000
+
+5. List all the records with sal=1250 or 1100 
+ 
+6. List all employees with sal>1250 and <2850
+ 
+7. Retrieve the details (Name, Salary and dept no) of the emp who are working in department no 20
+ 
+8. Display all employees who have joined after 9th june 81.
+ 
+9. Display empno,empname,sal, comm and total salary.   
+   Total Salary = comm + sal
+
+10. Display empname,deptno,dname for all employees.
+ 
+11. Display empname,deptno,dname for Smith.
+ 
+12. Display all employees with sal >2000 or job is either clerk or Salesman.
+ 
+13. List the employees in dept 20 and 30 who did not get any commission.
+ 
+14. Display all employees who works in either dept 10 or 30 or joined in year 1982
+ 
+15. There is a salary hike by 20% . Display the information from emp table as empno,ename,sal and new sal.
+ 
+16. Create new table emp100 same as emp without any data. Check it's structure.
+ 
+17. Insert new row with data of your choice  in emp10 table where manager(mgr) is null.
+ 
+18. Display the emp details who do not have manager.
+ 
+19. Use emp100 table to perform following query 
+Update employee salary. Increase sal of each employee by 15% of (sal+comm), change the mgr to 777 for all employees in dept 10. 
+ 
+20. Display all employees who joined between years 1981 to 1983.
+ 
+21. Display empno, name and department number of an emp working under manager with id 7698.
+ 
+22. List all managers working in dept 10.   
+ 
+23. Display all jobs from emp table. 
+ 
+24. Display all unique  deptnos in which employees are working.
+ 
+25. Implement following using case statement. Use data from emp database. 
+
+26. Company decides to give salary rise with following percentage.
+    Using case statement display the data as below
+    ename,job,sal,new sal
+    Generate new sal and display with proper heading.
+    clerk 7%
+    analyst 5%
+    manager %2
+    others no rise
+
+ 
+ 
+
+

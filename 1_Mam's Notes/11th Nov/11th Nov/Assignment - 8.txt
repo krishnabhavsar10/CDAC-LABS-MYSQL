@@ -1,0 +1,23 @@
+
+1. Display all empno,ename,deptno,sal,avg(sal),min(sal), max(sal).
+
+
+2. Write a query to display maximum salary, minimum salary and average sal along with emp name and deptno for all departments.
+
+
+3. Find sum of salary for all employees whose sal > 1000. Query should display ename,sal,Sum of salary, should be displayed according to the job.
+
+
+4. Find number of clerks working in each department. Display ename,job and count of that job.
+
+
+5. Find how many employees are working under same manager display mgr and the count .
+
+
+6. Calculate how many employees earn sal greater than 1500 in each dept. Query should display ename, sal, count of employees earning sal >1500. 
+ 
+
+
+7.Calculate the difference between max salary and minimum salary for depatno 20.  Query should display ename,sal, diff between max sal and employee's sal, diff between min sal and max sal of the dept.
+
+;

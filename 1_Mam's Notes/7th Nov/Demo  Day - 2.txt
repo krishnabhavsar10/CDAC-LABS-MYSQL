@@ -1,0 +1,441 @@
+between.. and
+---------------------
+select ename,sal
+from emp
+where sal >= 1600 and sal<=3000;
+
+
++-------+---------+
+| ename | sal     |
++-------+---------+
+| ALLEN | 1600.00 |
+| JONES | 2975.00 |
+| BLAKE | 2850.00 |
+| CLARK | 2450.00 |
+| SCOTT | 3000.00 |
+| FORD  | 3000.00 |
++-------+---------+
+6 rows in set (0.00 sec)
+
+
+select ename,sal
+from emp
+where sal between 1600 and 3000;
+
++-------+---------+
+| ename | sal     |
++-------+---------+
+| ALLEN | 1600.00 |
+| JONES | 2975.00 |
+| BLAKE | 2850.00 |
+| CLARK | 2450.00 |
+| SCOTT | 3000.00 |
+| FORD  | 3000.00 |
++-------+---------+
+6 rows in set (0.00 sec)
+
+
+IN operator
+===========
+
+sal = 1600 or sal = 3000 or sal=2850
+
+select ename,sal
+from emp
+where sal=1600 or sal= 3000 or sal=2850;
+
++-------+---------+
+| ename | sal     |
++-------+---------+
+| ALLEN | 1600.00 |
+| BLAKE | 2850.00 |
+| SCOTT | 3000.00 |
+| FORD  | 3000.00 |
++-------+---------+
+4 rows in set (0.00 sec)
+ 
+select ename,sal
+from emp
+where sal in (1600,3000,2850);
+
++-------+---------+
+| ename | sal     |
++-------+---------+
+| ALLEN | 1600.00 |
+| BLAKE | 2850.00 |
+| SCOTT | 3000.00 |
+| FORD  | 3000.00 |
++-------+---------+
+4 rows in set (0.00 sec)
+
+IS operator
+============
+used with null values
+
+select ename,comm 
+from emp
+where comm=null;
+wrong query
+
+select ename,comm 
+from emp
+where comm is null;
+
++--------+------+
+| ename  | comm |
++--------+------+
+| SMITH  | NULL |
+| JONES  | NULL |
+| BLAKE  | NULL |
+| CLARK  | NULL |
+| SCOTT  | NULL |
+| KING   | NULL |
+| ADAMS  | NULL |
+| JAMES  | NULL |
+| FORD   | NULL |
+| MILLER | NULL |
++--------+------+
+10 rows in set (0.00 sec)
+
+NOT operator
+=============
+select ename,comm 
+from emp
+where comm is not null;
+
++--------+---------+
+| ename  | sal     |
++--------+---------+
+| SMITH  |  800.00 |
+| WARD   | 1250.00 |
+| JONES  | 2975.00 |
+| MARTIN | 1250.00 |
+| CLARK  | 2450.00 |
+| KING   | 5000.00 |
+| TURNER | 1500.00 |
+| ADAMS  | 1100.00 |
+| JAMES  |  950.00 |
+| MILLER | 1300.00 |
++--------+---------+
+
+10 rows in set (0.00 sec)
+
+
+select ename,sal
+from emp
+where sal not in (1600,3000,2850);
+
+select ename,deptno
+from emp
+where deptno not in(20,30);
+
+select ename,comm
+from emp
+where comm in(1400,500) or comm is null;
+
+like operator
+===============
+names start with A
+
+%  set of characters
+_ single characters
+
+
+select ename
+from emp
+where ename like 'A%';
+
+ending with S
+select ename
+from emp
+where ename like '%s';
+
+a in between
+select ename
+from emp
+where ename like '%a%';
+
+start with any char and at second position A
+select ename
+from emp
+where ename like '_a%';
+
+select ename
+from emp
+where ename like '_ll%';
+
+four letter name
+select ename
+from emp
+where ename like '____';
+
+select ename,sal,comm,sal+5000 "Total Sal"
+from emp;
+
+increase sal by 5%
+
+select ename,sal,comm,sal+(sal*0.05) "New sal"
+from emp;
+
+sal+comm
+select ename,sal,comm,sal+comm
+from emp;
+
+ifnull(column,repace value)
+if comm is null then replace with 100
+
+select ename,sal,comm,sal+ifnull(comm,100)
+from emp;
+select ename,sal,comm,sal+ifnull(comm,0)
+from emp;
+
+deptno != 20  deptno<>20
+select ename,deptno
+from emp 
+where deptno!=20;
+
+select ename,deptno
+from emp 
+where deptno<>20;
+
+names not starting with A
+select ename
+from emp
+where ename not like 'a%';
+
+name ending with en
+select ename
+from emp
+where ename   like '%en';
+
+
+increase sal by 7% on sal+comm clerk
+
+select ename,sal,job,sal+((sal+ifnull(comm,0))*0.07) "Net sal"
+from emp
+where job='clerk';
+
+copy table
+==========
+
+create table new_emp
+as
+  select * 
+  from emp;
+
+create table tmp
+as
+  select * 
+  from emp
+  where 1 = 2;
+
+create table emp20
+as 
+  select *
+  from emp
+  where deptno=20;
+
+DISTINCT CLAUSE
+===============
+select deptno
+from emp;
+
+select distinct deptno
+from emp;
+
+select ename,job from emp;
+
+select ename, distinct job
+from emp;
+select distinct ename, job
+from emp;
+
+
+select job, deptno
+from emp;
+
+select distinct job, deptno
+from emp;
+
+case statement
+==============
+if comm > 1000 "Excellent performance"
+if comm <=1000 and comm >=500 "Good performance"
+if comm <500 "OK"
+otherwise "Perform well" 
+
+
+assignment
+clerk 7%
+analyst 5%
+manager %2
+others no rise
+
+select ename,sal,comm, case when comm > 1000 then "Excellent performance"
+when comm<=1000 and comm >=500 then "Good performance"
+when comm <500 then "OK"
+else "perform well"
+end "Remarks"
+from emp;
+===========================
+deleting the rows
+
+delete 
+from new_emp;
+
+delete 
+from new_emp
+where deptno=20;
+
+truncate caluse
+truncate table table_name;
+eg
+truncate table tmp2;
+
+delete entire table
+====================
+drop table table_name
+
+
+SQL statements are divided as follows
+---------------------------------------
+DML(data manipulation language) statements
+can be rolled back
+insert
+delete
+update
+
+DDL(data definition language)
+cannot be rolled back
+create
+drop
+truncate
+
+sorting data
+============ 
+
+select
+from
+where
+group by
+having
+order by column_name
+limit;
+
+to sort
+---------
+select
+from 
+order by;
+
+select ename,job,sal
+from emp
+order by sal;
+
+select ename,job,sal
+from emp
+order by sal desc;
+
+asc or desc
+
+select ename,job,sal
+from emp
+order by job;
+
+select ename,deptno,sal  
+from emp
+order by deptno,sal desc;
+
+limit
+======
+select ename,job,sal
+from emp
+limit 4;
+
+row 5,6,7
+select ename,job,sal
+from emp
+limit 3 offset 4;
+
+select ename,job,sal
+from emp
+limit 4 offset 12;
+
+select *
+from emp
+order by sal desc
+limit 1;
+
+select ename,sal,deptno
+from emp
+where deptno=10 
+order by sal desc
+limit 1;
+
+mysql> select ename,sal,deptno
+    -> from emp
+    -> where deptno=10
+    -> order by sal desc
+    -> limit 1;
++-------+---------+--------+
+| ename | sal     | deptno |
++-------+---------+--------+
+| KING  | 5000.00 |     10 |
++-------+---------+--------+
+1 row in set (0.00 sec)
+
+
+
+mysql> source C:\Users\Admin\Desktop\Dhanashree\CDAC ACTS\Day - 1\demobldmysql.sql
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

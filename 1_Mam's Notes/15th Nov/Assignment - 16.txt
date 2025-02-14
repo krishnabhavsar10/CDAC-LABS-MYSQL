@@ -1,0 +1,16 @@
+1. Write a cursor which will handle all rows having deptno 20;
+
+2. Pass job as a parameter to procedure and display all employees working​​​​​​​ for the specified job using cursor.
+
+3. Pass any number to the procedure and check if it is a perfect number. If the number is perfect, procedure should set value of out parameter as 1 otherwise as 0.   
+
+4. Write procedure 'prime' which will check if number passed to the procedure is prime. Procedure should display 1 if prime or 0 if nit prime. Use out parameter to display value out of the procedure and in parameter to pass value to the procedure.
+
+5. Write a query to add primary key constraint on emp table and check clustered index.Write a query to add primary key constraint on emp table and check clustered index.
+Try following command after creating index
+show indexes from emp;
+
+6. Write a query to create index on deptno. Check created index.
+
+ ------------------------------------------------------------------
+ 

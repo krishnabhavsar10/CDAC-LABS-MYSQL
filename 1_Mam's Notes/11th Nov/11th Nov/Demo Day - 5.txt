@@ -1,0 +1,371 @@
+ 
+=============================
+on delete set null 
+on delete cascade
+
+ondelete set null
+-----------------
+cat(cid,cname)
+create table cat
+(cid int,
+ cname varchar(12),
+ constraint pk_cid primary key(cid)
+);
+
+create table product
+(pid int,
+ pname varchar(25),
+ cid int,
+ constraint pk_pid primary key(pid),
+ constraint fk_cid foreign key(cid) references cat(cid)
+ on delete set null
+);
+
+on delete cascade
+----------------- 
+create table cat
+(cid int,
+ cname varchar(12),
+ constraint pk_cid primary key(cid)
+);
+
+create table product
+(pid int,
+ pname varchar(25),
+ cid int,
+ constraint pk_pid primary key(pid),
+ constraint fk_cid foreign key(cid) references cat(cid)
+ on delete cascade
+);
+
+insert into product
+values(1,'Dairy Milk',100),
+      (2,'charger',400),
+      (3,'jeans',200),
+      (4,'pen',300),
+      (5,'Lays',100);
+--------------------------
+on update cascade/set null
+update cat 
+set cid = 500 where cname='Clothes';
+
+create table product
+(pid int,
+ pname varchar(25),
+ cid int,
+ constraint pk_pid primary key(pid),
+ constraint fk_cid foreign key(cid) references cat(cid)
+ on update set null
+);
+
+insert into product
+values(1,'Dairy Milk',100),
+      (2,'charger',400),
+      (3,'jeans',200),
+      (4,'pen',300),
+      (5,'Lays',100);
+
+on update cascade
+------------------
+create table product
+(pid int,
+ pname varchar(25),
+ cid int,
+ constraint pk_pid primary key(pid),
+ constraint fk_cid foreign key(cid) references cat(cid)
+ on update cascade
+);
+ 
+insert into cat
+values(100,'Food'),
+      (200,'Clothes'),
+      (300,'Stationary'),
+       (400,'Electronics');
+
+insert into product
+values(1,'Dairy Milk',100),
+      (2,'charger',400),
+      (3,'jeans',200),
+      (4,'pen',300);
+
+=========================
+alter caluse -----DDL 
+
+adding new column in existing table
+-----------------------------
+alter table table_name
+add column_name datatype;
+
+alter table t1
+add state varchar(15);
+
+changing data type
+------------------
+
+alter table table_name
+modify column_name datatype;
+
+alter table t1
+modify id varchar(4);
+
+delete existing column
+----------------------
+
+alter table table_name
+drop column column_name;
+
+alter table t1
+drop column state;
+
+rename column
+---------------
+alter table table_name
+rename column column_nm to ew_column;
+
+alter table t1
+rename column id to city_code;
+
+-------------------------------
+rename table
+
+alter table table_name
+rename to new_table_name;
+
+alter table t1
+rename to city_info;
+
+deleting constraint
+----------------------
+deleting PK
+alter table table_name
+drop constraint constraint_name;
+
+alter table product
+drop primary key;
+
+deleting FK
+alter table table_name
+drop constraint constraint_name;
+
+alter table product
+drop constraint fk_cid;
+
+====================
+alter clause-DDL
+
+adding constraint on existing tables
+
+1. adding PK constraint
+
+alter table table_name
+add primary key(column_name);
+
+alter table table_name
+add constraint constraint_name primary key(column_name);
+
+add PK on dept table
+deptno -PK
+
+alter table dept
+add constraint pk_dno primary key(deptno);
+
+2. adding FK on emp
+deptno --fk
+empno -pk
+
+alter table emp
+add constraint pk_empno primary key(empno);
+
+alter table emp
+add constraint fk_dno foreign key(deptno) references dept(deptno);
+
+==============================
+
+keys in database
+------------------
+
+key - any column in the table which defines the row
+
+Primary Key - key which is unique and not null
+              every table(entity) has only 1 PK
+              table without  PK is call as weak entity
+
+Foreign Key - key which is PK in another table
+
+ emp(eno,ename,sal,deptno,ppno,adhar_no,comm,job)--dependent table
+
+ dept(dno,dname,loc)----base table
+
+in emp
+ eno --- unique & nn
+ ppno --- unique & nn
+ adhar_no ---- unique & nn
+ 
+ ppno,adhar_no,eno ------ candidate keys
+
+ eno --- PK
+
+ ppno,adhar_no --------- alternate keys
+
+ student
+--------------------
+  id sname   cname
+   1  raj     C
+   2  yash    Linux
+   3  geeta   wp
+   4  sita    adv java
+   1  raj     Linux
+   3  geeta   Linux
+   2  yash    RDBMS
+   5  raj     wp
+
+   id+cname --- pk  composite key
+
+   PK ----- simple PK --- only 1 column
+      ----- composite PK --- more than 1 columns
+
+=================================================
+
+Grouping data
+
+  select deptno,sum(sal)
+  from emp
+  group by deptno;
+
+
+
+
+grouping data
+=============
+
+select deptno,sum(sal)
+from emp
+group by deptno;
+ 
+select job,min(sal)
+from emp
+group by job;
+
+  select deptno,count(*)
+  from emp
+  group by deptno;
+
+display deptno if count of employees working in the dept
+is > 4
+
+select deptno,count(*)
+from emp
+group by deptno
+having count(*)>4;
+
+select deptno,count(*)
+from emp
+where sal>1500
+group by deptno;
+
+select  deptno,min(sal)
+from emp
+group by deptno;
+
+windows functions
+=================
+ 
+partition by clause
+
+over()
+
+select  ename,deptno,sal, min(sal) over()
+from emp;
+
+select  ename,deptno,sal, min(sal) over(), max(sal) over(), avg(sal) over()
+from emp;
+
+select  ename,deptno,sal, min(sal) over(partition by deptno) dpt_wise_min_sal
+from emp;
+
+ename,sal,job, avg(sal)
+
+select ename,sal,job, avg(sal) over(partition by job) avg_sal
+from emp;
+
+select ename,sal,job, avg(sal) over(partition by job) avg_sal
+from emp
+order by  sal ;
+
+subquery
+-----------
+list all employees working in dept 10
+
+select ename,deptno from emp where deptno=10;
+
+list all employees working in miller's dept
+
+single row subquery
+operators
+=
+<=
+>=
+<> 
+select * 
+from emp
+where deptno=(select deptno
+              from emp 
+              where ename='miller');
+
+list all employes earning sal> miller's sal
+select ename,sal 
+from emp
+where sal>(select sal
+              from emp 
+              where ename='miller');
+
+
+list all employees working in miller's dept and smith's dept
+any
+select ename, deptno
+from emp
+where deptno =any(select deptno
+                  from emp
+                  where ename in('smith','miller'));
+
+ANY
+ALL
+>any
+>all
+<any
+<all
+
+select ename,sal 
+from emp
+where sal>all(select sal
+              from emp 
+              where ename in('miller','jones'));
+
+
+select ename,sal 
+from emp
+where sal>any(select sal
+              from emp 
+              where ename in('miller','jones'));
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

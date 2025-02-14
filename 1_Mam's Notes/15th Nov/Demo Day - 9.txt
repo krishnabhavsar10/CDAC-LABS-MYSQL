@@ -1,0 +1,314 @@
+Triggers in RDBMS
+-------------------
+triggers are special type of procedures that are called by system automatically.
+
+triggers are written for following
+events
+
+insert 
+delete
+update
+
+after 
+before
+
+insert ...before
+operators ---new
+             old
+
+before insert
+-------------
+delimiter //
+create trigger check_sal 
+before insert
+on empdemo
+for each row
+begin
+    if new.sal is null
+    then
+       set new.sal=10000;
+    end if;
+end //
+delimiter ;
+
+insert into empdemo
+values(1234,'Radha','analyst',20,40000);
+
+insert into empdemo
+values(5678,'Radhika','analyst',20,null);
+
+after insert
+------------
+order_master(oid,pname,qyt,price);
+order_log(oid,ord_date,amt)
+delimiter //
+create trigger demo_trigger1
+after insert
+on order_master
+for each row
+begin
+  declare a decimal(7,2);
+  set a= new.qty*new.price;
+  insert into order_log
+  values(new.oid,curdate(),a); 
+end //
+delimiter ;
+
+create table order_master
+( oid int auto_increment,
+  pname varchar(12),
+  qty int,
+  price decimal(7,2),
+  constraint pk primary key(oid)
+);
+
+create table order_log
+(oid int,
+ ord_date date,
+ amt decimal(7,2)
+);
+insert into order_master(pname,qty,price)
+values('pen',100,10);
+
+insert into order_master(pname,qty,price)
+values('pencil',200,45);
+
+----------------------------------
+before delete
+
+create table emp_log
+(
+  empno int,
+  ename varchar(12),
+  job varchar(10)
+);
+
+delimiter //
+create trigger trigger_demo2
+before delete
+on empdemo
+for each row
+begin
+   insert into emp_log
+   values(old.empno,old.ename,old.job);
+end //
+delimiter ;
+
+delete
+from empdemo
+where empno=1234;
+
+--------------------------
+before update
+emp_old_data(empno,job,sal,pro_date)
+create table emp_old_data
+(
+  empno int,
+  job varchar(12),
+  sal decimal(7,2),
+  pro_date date
+);
+delimiter //
+create trigger trigger_demo3
+before update
+on empdemo
+for each row
+begin 
+  insert into emp_old_data     values(old.empno,old.job,old.sal,curdate(),new.sal);
+end //
+delimiter ;
+
+update empdemo
+set sal=2000
+where ename='allen';
+
+---------------------------------
+
+normalization
+-is implemented to control data redundancy
+9 forms of normalization
+
+first form - 1NF
+             first normal form
+second form - 2NF
+              second normal form
+third form - 3NF
+             third normal form
+3 and 1/2 - Boyce code normal form
+          
+          -4NF
+
+1NF  
+there can be only 1 entry in the column of table.
+i.e no multiple entries in column of the table
+
+student
+sname    course      marks    fees
+------------------
+amit       c,RDBMS     90,78   5000,10000
+sheetal    wp,linux
+rajesh     Linux
+
+solution 1
+student pk=sid
+-------
+sid  sname course1  course2
+
+1    amit     c      rdbms
+2    sheetal  wp      linux
+3    ajay     java    null
+
+solution 3 PK=sid+course
+
+sid  sname     course
+ 1    amit      c
+ 2    sheetal   wp
+ 1    amit      c++
+                Ad Java
+
+solution 3
+
+student
+sid sname  
+----------------------
+s1 amit   
+ 
+
+course
+cid cname fees   
+---------------- 
+c1  c       5000 
+c2  wp      20000
+c3  advjava 15000
+
+studet_course    pk=id
+--------------
+id sid   cid
+1   s1   c1
+2   s1   c3
+3   s3   c1
+
+2NF second normal for
+-------------------
+-table should be in 1NF
+-No partial dependency
+ (all non prime attributes should be fully functional dependent on prime attributes)
+- rule is for composite key
+
+(A+B)----C
+C should depend fully on A+B
+and not on either A or B
+
+custid		store_id    loc
+--------------------------------
+1           	10         pune
+2               30         Mumbai
+4               20         hydrabad
+3               10         pune		
+1               20         hydrabad
+ 
+pk= custid + store_id
+
+customer(cid,cname,ph_no,reg_no,)pk=cid
+
+store(store_id,sname,loc,add) pk=store_id
+
+cust_store(cid,sid) pk=cid+sid
+
+3NF ---- transitivity rule
+-----------------------------
+a<--b<---c
+c<--a
+
+-every attribute in the table should depend on PK
+emp(empno,ename,dptno,hiredate,job,sal)
+
+
+relationship rules (cardnalitis)
+--------------------------------
+product(pid,pame) pk=pid
+prod_details(pd_id,qty,price) pk=pd_id
+
+emp(empno,ename)
+dept(deptno,dname)
+
+1. one to one relationship
+---------------------------
+pk of any table will go in other 
+eg
+  person----passport
+person(pid,name,submit_date,ah_no)
+passport(ppno,name,add,date,exp_date)
+
+
+person(ppno,pid,name,submit_date,ah_no)
+ppno=fk,pid=pk dependent
+passport(ppno,name,add,date,exp_date)
+ppno=pk base table
+or
+person(pid,name,submit_date,ah_no)
+pid=pk base table
+passport(pid,ppno,name,add,date,exp_date)
+pid=fk
+ppno=pk dependent table
+
+
+2. one to many reationshp
+-------------------------
+key of one goes to many 
+emp detp
+one dept many employees
+
+emp  pk=empno          dept
+empno ename   dptno      deptno dname    
+-----------	    ------------
+123   smith   10         10    sales
+111   martin  10         20     pur
+222   allen   30         30    mk
+333   ford    30
+444   jones   10
+
+
+3. many to many relationship
+-----------------------------
+-many members many books
+-many students many courses
+
+third table is created
+ bkid=pk           mid=pk
+  bkid bname        mid mnaem
+  ---------
+   b1  aaaa         m1  fjgkdlfjg
+   b2  bbbb         m2  vcbv
+   b3  cccc         m3  kdjjf
+
+book_mem
+--------
+bkid mid
+
+
+ER-Diagram
+----------
+ entity relationship diagram
+
+library management system
+
+-identify the entities
+-identify the attributes
+-set the relationship between entities
+   
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+

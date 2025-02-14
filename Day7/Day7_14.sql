@@ -1,0 +1,75 @@
+--1. Write a stored procedure which will display all employees working in dept 30.
+
+-- NORMAL METHOD
+	
+	DELIMITER $$
+	CREATE PROCEDURE DISP_EMP_AT_DEPT30()
+	BEGIN 
+		SELECT * FROM EMP 
+		WHERE DEPTNO = 30;
+	END $$
+	DELIMITER ;
+	
+	CALL DISP_EMP_AT_DEPT30();
+	
+	DROP PROCEDURE DISP_EMP_AT_DEPT30;
+	
+-- WITH PARAMETER AS ANY DEPTNO 	
+	
+	DELIMITER $$
+	CREATE PROCEDURE DISP_EMP_DEPT(IN DEPT_NO INT)
+	BEGIN 
+		SELECT * FROM EMP 
+		WHERE DEPTNO = DEPT_NO;
+	END $$
+	DELIMITER ;
+
+	CALL DISP_EMP_DEPT(30);
+	
+	SET @VAR = 30;
+	CALL DISP_EMP_DEPT(@VAR);
+	
+	
+	DROP PROCEDURE DISP_EMP_DEPT;
+
+--2. Write a stored procedure which will display count of all analysts in the emp table.
+	
+	DELIMITER $$
+	CREATE PROCEDURE COUNT_ANALYST()
+	BEGIN	
+		SELECT COUNT(*) FROM EMP 
+		WHERE JOB = 'ANALYST';
+	END $$
+	DELIMITER ;
+	
+	CALL COUNT_ANALYST();
+	
+	DROP PROCEDURE COUNT_ANALYST;
+
+--3.Write a stored procedure which will find avg salary for any deptno passed to it. Pass deptno as in parameter  .
+
+	DELIMITER //
+	CREATE PROCEDURE AVG_SAL(IN DEPT_NO INT)
+	BEGIN
+		SELECT AVG(SAL) FROM EMP
+		WHERE DEPTNO = DEPT_NO;
+	END //
+	DELIMITER ;
+
+	CALL AVG_SAL(10);
+
+	DROP PROCEDURE AVG_SAL;
+
+--4. Pass empno,ename,sal to the procedure and insert it into the table.
+
+	DELIMITER KRISHNA 
+	CREATE PROCEDURE INSERT_INTO_TABLE(IN N INT, IN NAME VARCHAR(20), IN S INT)
+	BEGIN	
+		INSERT INTO EMP(EMPNO, ENAME, SAL)
+		VALUES(N, NAME, S);
+	END KRISHNA
+	DELIMITER ;
+	
+	CALL INSERT_INTO_TABLE(1234, 'KRISHNA', 10000);
+	
+	DROP PROCEDURE INSERT_INTO_TABLE;

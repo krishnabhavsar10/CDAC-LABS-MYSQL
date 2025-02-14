@@ -1,0 +1,19 @@
+1. Display tid,custid,customer name and buy_price.
+ 
+
+2.Dispaly tid,custid,customer name,vid,vehicle name, sid, salesmen name and buy_price for vehicle.
+ 
+Consider emp, dept and salgrade tables to answer following queries.
+
+1.List details of employees as ename,deptno,dname,sal,comm. 
+ 
+   
+2. Display details of employees as empno,ename,sal,job, deptno and dept name for all employees working as a clerk or salesman and earning  
+
+3. List details of employees as ename,deptno,dname,sal,comm working in dept 20 and 30 who did not get any commission.   
+ 
+
+4. Display ename,sal and grade of employee(use salgrade table).
+ 
+5. Display the information of department i.e deptno, dname and loc in which clerks are working. 
+ 

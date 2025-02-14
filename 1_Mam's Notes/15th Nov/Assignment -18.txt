@@ -1,0 +1,17 @@
+1. The HR department wants to know the names of all the employees who were hired after Blake. Create a query to display the name and hire date of any employee hired after employee  Blake.
+2. Write a query to get  year, and number of employees joined each year.
+3. Write a query to display all employees with experience more than 43 years.
+4. Display 3rd highest salary.
+5. Write a query which will display all employees working in sales department.
+6. Write a query to display year if more than 2 employees are hired in that year.
+7. From emp table write a SQL query to find those employees  whose ID matches any of the numbers 7902, 7876 and 7934. Display all columns.
+8. From emp table, write a SQL query to find the employee  whose salary is 3000 and reporting person’s ID is 7876. 
+9. From emp table  write a SQL query to find those employees whose salary falls within the range of the minimum  salary and 2500.  
+10. From emp table, write a SQL query to find those employees who do not work in the departments where managers’ IDs are between 7566 and 7698 (Begin and end values are included.) 
+11. From emp table, write a SQL query to find those employees who get second-highest salary.  
+12. From emp table, write a SQL query to find those employees who work in a department where the employee’s name contains the letter 'J'. 
+13. From emp table, write a SQL query to find those employees who earn more than the average salary and work in the same department as an employee whose first name contains the letter 'J'. Return employee ID, first name and salary.  
+14. From emp table, write a SQL query to find those employees whose salaries are higher than the average for all departments.
+15. From emp table, write a SQL query to find those employees whose salary matches that of the employee    who works in department ID 30
+16. From emp table, write a SQL query to find employees who work for the department in which employee ID 7788 is employed.
+17. From emp table, write a SQL query to display all employees working in the department whose location is as that of the location of dept 3

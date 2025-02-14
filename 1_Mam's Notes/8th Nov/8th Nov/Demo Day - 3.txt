@@ -1,0 +1,629 @@
+Built in Functions
+=========================
+Single row fun (scalar functions)
+--------------
+1. numeric
+
+round()
+mysql> select round(1234.567);
++-----------------+
+| round(1234.567) |
++-----------------+
+|            1235 |
++-----------------+
+1 row in set (0.00 sec)
+ 
+insert into emp(empno,ename,sal)
+values(1111,'Amit',20000.89);
+
+truncate()
+select truncate(1234.2222,3);
+mysql> select truncate(1234.8971,1);
++-----------------------+
+| truncate(1234.8971,1) |
++-----------------------+
+|                1234.8 |
++-----------------------+
+1 row in set (0.00 sec)
+
+ceil()
+select ceil(123.2222);
+mysql> select ceil(123.01);
++--------------+
+| ceil(123.01) |
++--------------+
+|          124 |
++--------------+
+1 row in set (0.00 sec)
+
+mysql> select ceil(123.0);
++-------------+
+| ceil(123.0) |
++-------------+
+|         123 |
++-------------+
+1 row in set (0.00 sec)
+
+floor()
+select floor(123.333);
+mysql> select floor(123.333);
++----------------+
+| floor(123.333) |
++----------------+
+|            123 |
++----------------+
+1 row in set (0.00 sec)
+
+mysql> select floor(123.5);
++--------------+
+| floor(123.5) |
++--------------+
+|          123 |
++--------------+
+1 row in set (0.00 sec)
+
+mysql> select floor(123.9);
++--------------+
+| floor(123.9) |
++--------------+
+|          123 |
++--------------+
+1 row in set (0.00 sec)
+
+mysql> select floor(123.1);
++--------------+
+| floor(123.1) |
++--------------+
+|          123 |
++--------------+
+1 row in set (0.00 sec)
+
+sqrt()
+select sqrt(sal) from emp;
+
+select sqrt(9);
+mysql> select sqrt(9);
++---------+
+| sqrt(9) |
++---------+
+|       3 |
++---------+
+1 row in set (0.00 sec)
+
+abs()
+select abs(-5);
+mysql> select abs(-5);
++---------+
+| abs(-5) |
++---------+
+|       5 |
++---------+
+1 row in set (0.00 sec)
+
+power()
+select power(3,4);
+mysql> select power(3,4);
++------------+
+| power(3,4) |
++------------+
+|         81 |
++------------+
+1 row in set (0.00 sec)
+
+mod()
+select mod(8,2);
+mysql> select mod(8,2);
++----------+
+| mod(8,2) |
++----------+
+|        0 |
++----------+
+1 row in set (0.00 sec)
+
+select mod(8,3);
+mysql> select mod(8,3);
++----------+
+| mod(8,3) |
++----------+
+|        2 |
++----------+
+1 row in set (0.00 sec)
+------------------------
+string functions/character functions
+upper()
+mysql> select upper('amit');
++---------------+
+| upper('amit') |
++---------------+
+| AMIT          |
++---------------+
+1 row in set (0.00 sec)
+
+lower()
+select ename,lower(ename)
+from emp;
+
+select ename,lower(ename),upper(lower(ename))
+from emp;
+
+concat(arg1,arg2,arg3....)
+select ename,job,concat(ename,job)
+from emp;
+select ename,job,concat(ename,':',job)
+from emp;
+select ename,job,concat(ename,5,job)
+from emp;
+
+substr(string,pos,no of chars)
+
+select ename, substr(ename,2,3)
+from emp;
+
+ename+first 2 letters from job+deptno+@cdacACTS
+smithCL20@cdacACTS
+
+select ename,job,deptno,concat(lower(ename),substr(job,1,2),deptno,'@CDACACTS') 'email'
+from emp;
+
+length(ename)
+select ename,length(ename) from emp;
+
+ltrim()
+insert into emp(empno,ename)
+values(2222,'   Geeta');
+
+select ename,length(ename),ltrim(ename),length(ltrim(ename))
+from emp;
+rtrim()
+insert into emp(empno,ename)
+values(3333,'Seeta     ');
+select ename,length(ename),rtrim(ename),length(rtrim(ename))
+from emp;
+
+trim()
+insert into emp(empno,ename)
+values(4444,'   Neeta    ');
+
+replace(arg,str1,str2)
+select replace('India is my country','my country','a big nation');
+mysql> select replace('India is my country','my country','a big nation');
++------------------------------------------------------------+
+| replace('India is my country','my country','a big nation') |
++------------------------------------------------------------+
+| India is a big nation                                      |
++------------------------------------------------------------+
+1 row in set (0.00 sec)
+
+select replace(ename,ename,'Hello') from emp;
+select replace(ename,ename,concat('Hello ',ename)),deptno from emp;
+
+lpad()
+select ename,lpad(ename,8,'*') from emp;
+
+rpad()
+select ename,rpad(ename,8,'*') from emp;
+
+
+date and time functions
+------------------------
+1. curdate()
+select curdate();
+mysql> select curdate();
++------------+
+| curdate()  |
++------------+
+| 2024-11-08 |
++------------+
+1 row in set (0.00 sec)
+
+2. now()
+select now();
+mysql> select now();
++---------------------+
+| now()               |
++---------------------+
+| 2024-11-08 09:35:24 |
++---------------------+
+1 row in set (0.00 sec)
+
+sysdate()
+mysql> select sysdate();
++---------------------+
+| sysdate()           |
++---------------------+
+| 2024-11-08 09:36:07 |
++---------------------+
+1 row in set (0.00 sec)
+
+date_format()
+select ename,hiredate,date_format(hiredate,'%y')
+from emp;
+
+select ename,hiredate,date_format(hiredate,'%Y')
+from emp;
+mysql> select date_format(curdate(),'%y');
++-----------------------------+
+| date_format(curdate(),'%y') |
++-----------------------------+
+| 24                          |
++-----------------------------+
+1 row in set (0.00 sec)
+
+mysql> select date_format('2024-11-8','%y');
++-------------------------------+
+| date_format('2024-11-8','%y') |
++-------------------------------+
+| 24                            |
++-------------------------------+
+1 row in set (0.00 sec)
+
+mysql> select date_format(curdate(),'%y');
++-----------------------------+
+| date_format(curdate(),'%y') |
++-----------------------------+
+| 24                          |
++-----------------------------+
+1 row in set (0.00 sec)
+
+mysql> select date_format('2024-11-8','%y');
++-------------------------------+
+| date_format('2024-11-8','%y') |
++-------------------------------+
+| 24                            |
++-------------------------------+
+1 ro
+
+select date_format(hiredate,'%m') from emp;
+
+select date_format(hiredate,'%M') from emp;
+
+select date_format(hiredate,'%D') from emp;
+
+select date_format(hiredate,'%d') from emp;
+
+select date_format(hiredate,'%b') from emp;
+
+hour()
+select hour(now());
+
+year()
+
+day()
+
+datediff()
+select ename,hiredate,datediff(curdate(),hiredate)
+from emp;
+
+select ename,hiredate,datediff(curdate(),hiredate)/365
+from emp;
+
+select ename,hiredate,floor(datediff(curdate(),hiredate)/365) 
+from emp
+where floor(datediff(curdate(),hiredate)/365)
+>=43;
+
+extract()
+select ename,hiredate,extract(year from hiredate) from emp;
+
+select ename,hiredate
+from emp
+where extract(year from hiredate)=1981;
+
+select ename,hiredate
+from emp
+where year(hiredate)=1981;
+
+select ename,hiredate
+from emp
+where extract(month from hiredate)=12;
+
+select ename,hiredate
+from emp
+where extract(day from hiredate)=11;
+
+date_add()
+
+select hiredate, date_add(hiredate, interval 15 day) from emp
+
+mysql> select hiredate, date_add(hiredate, interval 15 day) from emp;
++------------+-------------------------------------+
+| hiredate   | date_add(hiredate, interval 15 day) |
++------------+-------------------------------------+
+| 1980-12-17 | 1981-01-01                          |
+| 1981-02-20 | 1981-03-07                          |
+| 1981-02-22 | 1981-03-09                          |
+| 1981-04-02 | 1981-04-17                          |
+| 1981-09-28 | 1981-10-13                          |
+| 1981-05-01 | 1981-05-16                          |
+| 1981-06-09 | 1981-06-24                          |
+| 1982-12-09 | 1982-12-24                          |
+| 1981-11-17 | 1981-12-02                          |
+| 1981-09-08 | 1981-09-23                          |
+| 1983-01-12 | 1983-01-27                          |
+| 1981-12-03 | 1981-12-18                          |
+| 1981-12-03 | 1981-12-18                          |
+| 1982-01-23 | 1982-02-07                          |
++------------+-------------------------------------+
+14 rows in set (0.00 sec)
+
+
+select hiredate, date_add(hiredate, interval 3 month) from emp
+mysql> select hiredate, date_add(hiredate, interval 3 month) from emp;
++------------+--------------------------------------+
+| hiredate   | date_add(hiredate, interval 3 month) |
++------------+--------------------------------------+
+| 1980-12-17 | 1981-03-17                           |
+| 1981-02-20 | 1981-05-20                           |
+| 1981-02-22 | 1981-05-22                           |
+| 1981-04-02 | 1981-07-02                           |
+| 1981-09-28 | 1981-12-28                           |
+| 1981-05-01 | 1981-08-01                           |
+| 1981-06-09 | 1981-09-09                           |
+| 1982-12-09 | 1983-03-09                           |
+| 1981-11-17 | 1982-02-17                           |
+| 1981-09-08 | 1981-12-08                           |
+| 1983-01-12 | 1983-04-12                           |
+| 1981-12-03 | 1982-03-03                           |
+| 1981-12-03 | 1982-03-03                           |
+| 1982-01-23 | 1982-04-23                           |
++------------+--------------------------------------+
+14 rows in set (0.00 sec)
+
+select hiredate, date_add(hiredate, interval 3 year) from emp;
+
+mysql> select hiredate, date_add(hiredate, interval 3 year) from emp;
++------------+-------------------------------------+
+| hiredate   | date_add(hiredate, interval 3 year) |
++------------+-------------------------------------+
+| 1980-12-17 | 1983-12-17                          |
+| 1981-02-20 | 1984-02-20                          |
+| 1981-02-22 | 1984-02-22                          |
+| 1981-04-02 | 1984-04-02                          |
+| 1981-09-28 | 1984-09-28                          |
+| 1981-05-01 | 1984-05-01                          |
+| 1981-06-09 | 1984-06-09                          |
+| 1982-12-09 | 1985-12-09                          |
+| 1981-11-17 | 1984-11-17                          |
+| 1981-09-08 | 1984-09-08                          |
+| 1983-01-12 | 1986-01-12                          |
+| 1981-12-03 | 1984-12-03                          |
+| 1981-12-03 | 1984-12-03                          |
+| 1982-01-23 | 1985-01-23                          |
++------------+-------------------------------------+
+=============================
+
+Group (aggregate functions)
+sum()
+avg()
+min()
+max()
+count()
+
+select sum(sal)
+from emp;
+mysql> select sum(sal)
+    -> from emp;
++----------+
+| sum(sal) |
++----------+
+| 49025.89 |
++----------+
+1 row in set (0.00 sec)
+
+select ename,sum(sal)
+from emp;
+
+select  max(sal)
+from emp;
+mysql> select  max(sal)
+    -> from emp;
++----------+
+| max(sal) |
++----------+
+| 20000.89 |
++----------+
+1 row in set (0.00 sec)
+
+select min(sal)
+from emp;
+mysql> select min(sal)
+    -> from emp;
++----------+
+| min(sal) |
++----------+
+|   800.00 |
++----------+
+1 row in set (0.00 sec)
+
+mysql> select avg(sal) Avg ,max(sal) "max sal",min(sal) "min sal",sum(sa
+l) from emp;
++-------------+----------+---------+----------+
+| Avg         | max sal  | min sal | sum(sal) |
++-------------+----------+---------+----------+
+| 3268.392667 | 20000.89 |  800.00 | 49025.89 |
++-------------+----------+---------+----------+
+1 row in set (0.00 sec)
+
+count()
+
+select count(*)
+from emp;
+
+select count(sal)
+from emp;
+
+mysql> select count(*)
+    -> from emp;
++----------+
+| count(*) |
++----------+
+|       17 |
++----------+
+1 row in set (0.01 sec)
+
+mysql> select count(sal)
+    -> from emp;
++------------+
+| count(sal) |
++------------+
+|         15 |
++------------+
+1 row in set (0.00 sec)
+
+count no of employees in dept 20
+
+select count(*)
+from emp
+where deptno=20;
+
+=============================
+
+regular expressions
+
+regexp_like()
+. single
+.* multiple chars
+[] set of chars
+^ first char
+$ last char
+
+display all names starting with 'a'
+select ename
+from emp
+where regexp_like(ename,'^a');
+mysql> select ename
+    -> from emp
+    -> where regexp_like(ename,'^a');
++-------+
+| ename |
++-------+
+| ALLEN |
+| ADAMS |
+| Amit  |
++-------+
+3 rows in set (0.02 sec)
+
+ending with 'n'
+select ename
+from emp
+where regexp_like(ename,'.*n$');
+mysql> select ename
+    -> from emp
+    -> where regexp_like(ename,'.*n$');
++--------+
+| ename  |
++--------+
+| ALLEN  |
+| MARTIN |
++--------+
+2 rows in set (0.00 sec)
+
+n can come anywhere
+select ename
+from emp
+where regexp_like(ename,'.*a.*');
+
+starts with a or m or k
+select ename
+from emp
+where regexp_like(ename,'^[amk]');
+
+not start with a or m or k
+select ename
+from emp
+where regexp_like(ename,'^[^amk]');
+
+starts with m, l at 3rd pos ends with r
+select ename
+from emp
+where regexp_like(ename,'^m.l.*r$');
+
+l at 2nd pos ending with n
+select ename
+from emp
+where regexp_like(ename,'^.l.*n$');
+
+select ename
+from emp
+where regexp_like(ename,'.l.*n$');
+
+starts with 'a' ends with 'n' or 
+starts with 'm' ends with 'r' or
+starts with 's' ends with 'h'
+
+select ename
+from emp
+where regexp_like(ename,'^a.*n$|^m.*r$|^s.*h$');
+
+handling multiple tables
+empno,ename,deptno, dname
+
+select emp.empno, emp.ename, emp.deptno "emp d",dept.deptno "dept d",
+dept.dname
+from emp,dept
+where emp.deptno=dept.deptno;
+
+table alias
+------------
+select e.empno, e.ename, e.deptno, d.dname,d.loc
+from emp e, dept d
+where e.deptno=d.deptno;
+
+empno,ename,deptno,dname,sal,grade
+
+select e.empno,e.ename,e.deptno,d.dname,e.sal,s.grade 
+from emp e,dept d,salgrade s
+where e.deptno=d.deptno and  e.sal between s.losal and s.hisal;
+
+empno,ename,sal,grade
+
+select e.empno, e.ename, e.sal, s.grade
+from emp e, salgrade s
+where e.sal between s.losal and s.hisal;
+
+select e.empno, e.ename, e.sal, s.grade
+from emp e, salgrade s
+where e.sal >=s.losal and e.sal<=s.hisal;
+
+select e.empno, e.ename, e.sal, s.grade
+from emp e, salgrade s
+where e.sal between s.losal and s.hisal
+order by s.grade;
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

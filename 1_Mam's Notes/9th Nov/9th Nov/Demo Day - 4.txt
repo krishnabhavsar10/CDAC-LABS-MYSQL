@@ -1,0 +1,355 @@
+cat(cid,cname)
+create table cat
+(cid int,
+ cname varchar(12)
+);
+
+create table product
+(pid int,
+ pname varchar(25),
+ cid int
+);
+
+create table prod_det
+(pid int,
+ qty int,
+ price float(9,2));
+
+insert into cat
+values(100,'Food'),
+      (200,'Clothes'),
+      (300,'Stationary'),
+       (400,'Electronics');
+
+insert into product
+values(1,'Dairy Milk',100),
+      (2,'charger',400),
+      (3,'jeans',200),
+      (4,'pen',300);
+
+insert into prod_det
+values(1,56,40),
+      (2,15,500),
+      (3,34,1200);
+
+
+pid,pname,cid,cname,price,qty,amt
+amt=price*qty
+
+select p.pid,p.pname, c.cid, c.cname,
+pd.qty, pd.price, pd.price*pd.qty "Amt"
+from product p, cat c, prod_det pd
+where p.cid=c.cid and p.pid=pd.pid
+order by p.pid;
+
+set operators
+=============
+union
+union all
+intersect
+minus (except)
+
+create table t1
+(id int,
+ city varchar(20)
+);
+insert into t1
+values(1,'pune'),
+      (2,'nagpur'),
+      (3,'delhi'),
+       (4,'shimla'),
+       (5,'hydrabad');
+
+create table t2
+(id int,
+ city varchar(20)
+);
+create table t1
+(id int,
+ city varchar(20)
+);
+insert into t2
+values(10,'pune'),
+      (20,'udaypur'),
+      (3,'delhi'),
+       (4,'shimla'),
+       (5,'ranchi');
+union
+a={10,20,30}
+b={20,30,40,50}
+a union b ={10,20,30,40,50}
+
+select * 
+from t1
+union
+select *
+from t2;
+
+select * 
+from t2
+union
+select *
+from t1;
+
+union all
+a={10,20,30}
+b={20,30,40,50}
+a union all b ={10,20,30,20,30,40,50}
+select * 
+from t1
+union all
+select *
+from t2;
+
+union all
+a={10,20,30}
+b={20,30,40,50}
+a intersect b ={20,30}
+
+select * 
+from t1
+intersect
+select *
+from t2;
+
+minus (except)
+a={10,20,30}
+b={20,30,40,50}
+a except b ={10}
+b except a ={40,50}
+
+select * 
+from t1
+except
+select *
+from t2;
+
+select * 
+from t2
+except
+select *
+from t1;
+
+constraints in MySQL
+====================
+column level constraints
+
+1. unique
+
+ 
+
+create table student
+(roll int unique,
+ name varchar(12)
+);
+insert into student
+values(1,'Geeta'),
+      (1,'Raj');
+
+2. not null
+create table student
+(roll int unique,
+ name varchar(12) not null
+);
+insert into student
+values(2,null);
+
+insert into student(name)
+values('Akash'),
+      ('Geeta');
+
+create table student
+(roll int unique not null,
+ name varchar(12) not null
+);
+insert into student(name)
+values('Seema');
+
+3. default
+
+create table salesman
+(sid int unique not null,
+ sname varchar(10) not null,
+ city varchar(10) default 'pune'
+);
+insert into salesman
+values(1,'Rakesh','Mumbai')
+
+insert into salesman(sid,sname)
+values(2,'Suresh');
+
+insert into salesman
+values(3,'Ramesh',null);
+
+insert into salesman
+values(4,'Ramesh',default);
+
+check constraint
+
+create table student
+(roll int unique,
+ name varchar(12),
+ marks int check(marks>=35)
+);
+
+insert into student 
+values(11,'Seema',35);
+insert into student 
+values(12,'Samir',34);
+
+table level constraint
+--------------------
+primary key
+
+emp(eno,ename,ppno,adhno,projno,sal,comm,doj,depno,job)
+
+eno - unique , not null
+ename = nn
+ppno - unique, nn
+adhno - u , nn PK
+
+constraint pk_no primary key(adhno)
+
+create table employee
+(
+eno  int unique not null,
+ename varchar(10) not null,
+ppno int unique not null,
+adhno int ,
+constraint p primary key(adhno)
+);
+
+insert into employee
+values(1,'RAjesh',1234,98076);
+
+
+create table employee
+(eno int  primary key,
+ ename varchar(12) not null,
+ sal int default 10000
+);
+
+create table employee
+(eno int,
+ ename varchar(12) not null,
+ sal int default 10000
+ primary key(eno)
+);
+
+create table employee
+(eno int,
+ ename varchar(12) not null,
+ sal int default 10000
+ constraint x primary key(eno)
+);
+
+product(pid,cid,pname,city)
+create table product
+(pid int,
+ cid int not null,
+ pname varchar(10) not null,
+ city varchar(10) not null,
+ constraint y primary key(pid)
+);
+
+foreign key- key which is PK in another table
+===========
+create table d
+(dno int,
+ dname varchar(12),
+ constraint pk_dno primary key(dno)
+);
+
+create table e
+(eno int,
+ ename varchar(10) not null,
+ deptno int ,
+ constraint pk_eno primary key(eno),
+ constraint fk_deptno foreign key(deptno) 
+ references d(dno)
+);
+
+insert into e
+values(1,'Sameer',10);
+insert into e
+values(2,'Sagar',20);
+insert into e
+values(3,'Geeta',null);
+
+
+insert into d
+values(10,'R&D');
+insert into d
+values(20,'Sales');
+
+====================
+alter clause-DDL
+
+adding constraint on existing tables
+
+1. adding PK constraint
+
+alter table table_name
+add primary key(column_name);
+
+alter table table_name
+add constraint constraint_name primary key(column_name);
+
+add PK on dept table
+deptno -PK
+
+alter table dept
+add constraint pk_dno primary key(deptno);
+
+2. adding FK on emp
+deptno --fk
+empno -pk
+
+alter table emp
+add constraint pk_empno primary key(empno);
+
+alter table emp
+add constraint fk_dno foreign key(deptno) references dept(deptno);
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

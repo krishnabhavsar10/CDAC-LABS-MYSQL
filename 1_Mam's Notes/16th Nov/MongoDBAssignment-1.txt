@@ -1,0 +1,77 @@
+assignment 1
+
+1.display all movies with rating=4
+
+2.display all movies with rating=3 and price=200
+
+3.display all movies with rating>3 and price=540 
+
+4.display all movies with rating>3 and price>300
+
+5.display all movies with price > 200 and < 400
+
+6.display all movies with price = 200 or 540 400
+
+7.display all movies with price not = 200 nor 540  nor 400
+
+8.display count of  movies with price not = 200 nor 540  nor 400
+sol: use count method as follows
+     db.movie.find().count()
+
+9.display all movies with rating=4 or price>300
+
+10.display all movies with price not > 200 and < 400
+
+11.display all movies with rating is odd
+
+12.display all movies in which amitabh has acted
+
+13.display all movies in which amitabh has acted display in ascending order of price
+
+14.display all movies in which amitabh has acted display in descending order of price
+
+15.display all movies in which amitabh has acted display only 1st document
+
+16.display all movies in which amitabh has acted display only 1st  5 document
+
+17.Display top 5 highest rating movies.
+
+18.Display  lowest 3 rating movies.
+
+19.For movie "kahani 2" change rating to 5.
+
+20.Change price =400 and increase rating by 2 for all movies with name Kahani in it.
+
+21.Decrease price of all movies by Rs. 40.
+
+22.Increase the price by 10% of price
+
+23. to display all movies with amitabh acted in it and is at 1 st index position in array
+db.movie.find({'actor':/^[Aa]mitabh'}).skip(4).limit(3)
+
+24. to find all movies starts with diigt
+ 
+25. to find all movies with name start with digit and ends with s
+  
+26. to find all movies with name start with alphabate 
+
+27.Change rating of movie Kesari to 2  
+
+28.increase the price of all tickits by Rs 20 for Amitabh's movie. 
+
+29.Delete key rating for movie Kesari
+
+30.Increase price by 50 and change rating to 7 for movie 3 idiots.
+
+
+31.Delete first value from array
+
+ 
+32.Change price =400 and increase rating by 2 for all movies with name Kahani in it.
+
+ 
+
+  
+
+
+

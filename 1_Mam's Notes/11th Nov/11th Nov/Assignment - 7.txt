@@ -1,0 +1,27 @@
+1. List sum of salary for each department.
+
+
+2. List department wise sum sal only if the sum for any department is  > 10000.
+ 
+
+3. Display job wise sum of salary for all departments except dept 30   if the sum salary is >9000.
+
+
+4. Display job wise max sal only for managers, clerks, salesman working in dept 10 and 20. Sort the data by des order of the max salary.
+
+
+5.Display job wise number of employees in all the department with total salary > 3000
+
+
+6.Display the department number having atleast 3 employees in it.
+
+
+8. Display deptno, salary sum and min(sum) for all employees who are managers.
+
+
+9.Find sum(sal) for each dept having more than 2 clerk. 
+   
+
+10.Calculate how many employees earn sal more than 1500 in each dept.
+
+ 

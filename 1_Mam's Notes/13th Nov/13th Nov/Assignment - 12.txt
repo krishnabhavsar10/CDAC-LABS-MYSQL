@@ -1,0 +1,23 @@
+ 1. Create a view emp_view having following columns
+    empno,ename,deptno,sal, comm
+
+ 2. Insert new employee having following information in the view
+    (1111,'Geeta',20,10000,300)
+    check the data inserted in the view as well as the base table. 
+
+ 3. Create a view for deptno 20 as emp_v20 having following cloumns. This view should contain rows from dept20 only.
+    empno,ename,deptno,job.
+
+ 4. Insert new employee  in view emp_v20 having following information (2222,'Raj',40,'Analyst') 
+    check the data inserted in the base table emp and also in the view.
+
+ 5. Create a view for deptno 20 as new_emp_v20 having following cloumns
+    empno,ename,deptno,job with constraint 'check option' .
+ 6. Insert below data in new_emp_v20 having following information(2222,'Raj',40,'Analyst')
+    check the data inserted in the base table emp and also in the view.
+
+ 7. Check the views created.
+
+ 8. Create a view with columns as empno,ename, deptno and dname.
+    empno,ename, deptno and dname.
+    Check if you can enter the data in the above view.

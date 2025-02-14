@@ -1,0 +1,14 @@
+1. List all rooms which are allocated or not allocated to any courses. Use joins.
+2. Display all products sold by Kirti.
+3. Consider emp and dept  table display empno,ename,deptno, dname and loc for all employees.
+4. Consider emp and dept  table display empno,ename,deptno, dname and loc for all employees who are working as managers.
+5. Consider emp and dept table dispaly deptno and dname to whom employees are assingned and also the depts to whom  employees are not assigned.  
+6. From emp table, display empno,ename,mgr and name of manager for each employee.
+7. Create following table and insert the required data.create table Product_table(   pid  int,   pname varchar (20),   sid int );
+  sid is sample id which is given as a free sample on every product sold
+  pid pnames id 
+   1  Pen    2 
+   2  Pencil 3
+   3  Eraser 2
+   4  Sketch Pens 1
+Write a query to display pid, pname, sid and sample name for all the products.       
