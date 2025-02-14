@@ -79,7 +79,7 @@ MySQL-Course-Labs/
 ## How to Use
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-username/cdac-labs-mysql.git
+   git clone https://github.com/your-username/CDAC-LABS-MYSQL.git
    ```
 2. Navigate to a session folder and review the scripts.
 3. Run SQL queries using MySQL Workbench, Shell, or Monitor.
